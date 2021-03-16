@@ -116,7 +116,7 @@ export async function strategy(
   const masterchefResult = await batchAddressSubgraphRequest(
     MASTERCHEF_SUBGRAPH_URL[network],
     masterchefParamGenerator,
-    addresses,
+    addresses
   );
 
   const one_gwei = BigNumber.from(10).pow(9);

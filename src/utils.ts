@@ -107,7 +107,7 @@ export async function batchAddressSubgraphRequest(
   url: string,
   queriesByAddress: (addresses: string[]) => any,
   addresses: string[],
-  batchSize:number = 1000,
+  batchSize: number = 1000,
   options: any = {}
 ): Promise<any> {
   const addressBatches: string[][] = [];

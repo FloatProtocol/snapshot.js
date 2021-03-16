@@ -16,7 +16,6 @@ export async function strategy(
   options,
   snapshot
 ) {
-
   const paramsGenerator = (userIds: string[]) => {
     let params = {
       users: {
