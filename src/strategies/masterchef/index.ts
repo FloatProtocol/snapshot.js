@@ -1,6 +1,6 @@
 import { getAddress } from '@ethersproject/address';
 import { BigNumber } from '@ethersproject/bignumber';
-import { subgraphRequest } from '../../utils';
+import { batchAddressSubgraphRequest, subgraphRequest } from '../../utils';
 
 const MASTERCHEF_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/sushiswap/master-chef'
@@ -10,8 +10,8 @@ const SUSHISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/sushiswap/exchange'
 };
 
-export const author = '0xKiwi';
-export const version = '0.1.0';
+export const author = '0xKiwi & Float Protocol';
+export const version = '0.1.1';
 
 export async function strategy(
   _space,
@@ -83,35 +83,40 @@ export async function strategy(
 
   const pools = allSushiPools.map(({ id }) => id.toLowerCase());
 
-  const masterchefParams = {
-    pools: {
-      __args: {
-        where: {
-          pair_in: pools
-        },
-        first: 100
-      },
-      id: true,
-      pair: true,
-      users: {
+  const masterchefParamGenerator = (userAddresses: string[]) => {
+    let param = {
+      pools: {
         __args: {
           where: {
-            amount_gt: 0,
-            address_in: addresses.map((address) => address.toLowerCase())
-          }
+            pair_in: pools
+          },
+          first: 100
         },
-        address: true,
-        amount: true
+        id: true,
+        pair: true,
+        users: {
+          __args: {
+            where: {
+              amount_gt: 0,
+              address_in: userAddresses.map((address) => address.toLowerCase())
+            }
+          },
+          address: true,
+          amount: true
+        }
       }
+    };
+    if (snapshot !== 'latest') {
+      // @ts-ignore
+      param.pools.__args.block = { number: snapshot };
     }
+    return param;
   };
-  if (snapshot !== 'latest') {
-    // @ts-ignore
-    masterchefParams.pools.__args.block = { number: snapshot };
-  }
-  const masterchefResult = await subgraphRequest(
+
+  const masterchefResult = await batchAddressSubgraphRequest(
     MASTERCHEF_SUBGRAPH_URL[network],
-    masterchefParams
+    masterchefParamGenerator,
+    addresses,
   );
 
   const one_gwei = BigNumber.from(10).pow(9);

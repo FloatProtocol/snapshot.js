@@ -103,6 +103,25 @@ export function mergeDeep(target, ...sources) {
   return mergeDeep(target, ...sources);
 }
 
+export async function batchAddressSubgraphRequest(
+  url: string,
+  queriesByAddress: (addresses: string[]) => any,
+  addresses: string[],
+  batchSize:number = 1000,
+  options: any = {}
+): Promise<any> {
+  const addressBatches: string[][] = [];
+  for (let i = 0; i < addresses.length; i += batchSize) {
+    addressBatches.push(addresses.slice(i, i + batchSize));
+  }
+  return batchSubgraphRequest<string[]>(
+    url,
+    queriesByAddress,
+    addressBatches,
+    options
+  );
+}
+
 export async function batchSubgraphRequest<T>(
   url: string,
   queryConstructor: (param: T) => any,
