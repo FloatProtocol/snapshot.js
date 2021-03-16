@@ -79,6 +79,46 @@ export async function multicall(
   }
 }
 
+// https://stackoverflow.com/a/34749873
+export function isObject(item) {
+  return item && typeof item === 'object' && !Array.isArray(item);
+}
+
+// https://stackoverflow.com/a/34749873
+export function mergeDeep(target, ...sources) {
+  if (!sources.length) return target;
+  const source = sources.shift();
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        mergeDeep(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+
+  return mergeDeep(target, ...sources);
+}
+
+export async function batchSubgraphRequest<T>(
+  url: string,
+  queryConstructor: (param: T) => any,
+  parameterSets: T[],
+  options: any = {}
+): Promise<any> {
+  const dataResponses = await Promise.all(
+    parameterSets.map((param) =>
+      subgraphRequest(url, queryConstructor(param), options)
+    )
+  );
+  let res = {};
+  mergeDeep(res, dataResponses);
+  return res;
+}
+
 export async function subgraphRequest(url: string, query, options: any = {}) {
   const res = await fetch(url, {
     method: 'POST',

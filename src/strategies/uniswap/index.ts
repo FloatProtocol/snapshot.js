@@ -5,8 +5,8 @@ const UNISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
 };
 
-export const author = 'vfatouros';
-export const version = '0.1.0';
+export const author = 'vfatouros & Float Protocol';
+export const version = '0.2.0';
 
 export async function strategy(
   _space,
@@ -16,43 +16,56 @@ export async function strategy(
   options,
   snapshot
 ) {
-  const params = {
-    users: {
-      __args: {
-        where: {
-          id_in: addresses.map((address) => address.toLowerCase())
-        },
-        first: 1000
-      },
-      id: true,
-      liquidityPositions: {
+  const batches = [];
+  const batchSize = 1000;
+  for (let i = 0; i < addresses.length; i += batchSize) {
+    batches.push(addresses.slice(i, i + batchSize));
+  }
+
+  const paramsGenerator = (userIds: string[]) => {
+    let params = {
+      users: {
         __args: {
           where: {
-            liquidityTokenBalance_gt: 0
-          }
+            id_in: userIds.map((address: string) => address.toLowerCase())
+          },
+          first: 1000
         },
-        liquidityTokenBalance: true,
-        pair: {
-          id: true,
-          token0: {
-            id: true
+        id: true,
+        liquidityPositions: {
+          __args: {
+            where: {
+              liquidityTokenBalance_gt: 0
+            }
           },
-          reserve0: true,
-          token1: {
-            id: true
-          },
-          reserve1: true,
-          totalSupply: true
+          liquidityTokenBalance: true,
+          pair: {
+            id: true,
+            token0: {
+              id: true
+            },
+            reserve0: true,
+            token1: {
+              id: true
+            },
+            reserve1: true,
+            totalSupply: true
+          }
         }
       }
+    };
+    if (snapshot !== 'latest') {
+      // @ts-ignore
+      params.users.liquidityPositions.__args.block = { number: snapshot };
     }
+    return params;
   };
-  if (snapshot !== 'latest') {
-    // @ts-ignore
-    params.users.liquidityPositions.__args.block = { number: snapshot };
-  }
   const tokenAddress = options.address.toLowerCase();
-  const result = await subgraphRequest(UNISWAP_SUBGRAPH_URL[network], params);
+  const result = await subgraphRequest(
+    UNISWAP_SUBGRAPH_URL[network],
+    paramsGenerator,
+    batches
+  );
   const score = {};
   if (result && result.users) {
     result.users.forEach((u) => {
