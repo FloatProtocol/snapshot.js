@@ -16,7 +16,7 @@ export async function strategy(
   options,
   snapshot
 ) {
-  const batches = [];
+  const batches: string[][] = [];
   const batchSize = 1000;
   for (let i = 0; i < addresses.length; i += batchSize) {
     batches.push(addresses.slice(i, i + batchSize));
