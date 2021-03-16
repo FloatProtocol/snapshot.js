@@ -115,7 +115,7 @@ export async function batchSubgraphRequest<T>(
     )
   );
   let res = {};
-  mergeDeep(res, dataResponses);
+  mergeDeep(res, ...dataResponses);
   return res;
 }
 
