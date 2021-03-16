@@ -1,5 +1,5 @@
 import { getAddress } from '@ethersproject/address';
-import { batchSubgraphRequest, subgraphRequest } from '../../utils';
+import { batchSubgraphRequest } from '../../utils';
 
 const SUSHISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/sushiswap/exchange'
@@ -60,12 +60,14 @@ export async function strategy(
     }
     return params;
   };
+
   const tokenAddress = options.address.toLowerCase();
   const result = await batchSubgraphRequest<string[]>(
     SUSHISWAP_SUBGRAPH_URL[network],
     paramsGenerator,
     batches
   );
+
   const score = {};
   if (result && result.users) {
     result.users.forEach((u) => {

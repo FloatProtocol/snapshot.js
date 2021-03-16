@@ -1,5 +1,5 @@
 import { getAddress } from '@ethersproject/address';
-import { subgraphRequest } from '../../utils';
+import { batchSubgraphRequest } from '../../utils';
 
 const UNISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
@@ -61,7 +61,7 @@ export async function strategy(
     return params;
   };
   const tokenAddress = options.address.toLowerCase();
-  const result = await subgraphRequest(
+  const result = await batchSubgraphRequest<string[]>(
     UNISWAP_SUBGRAPH_URL[network],
     paramsGenerator,
     batches
