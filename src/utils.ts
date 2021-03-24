@@ -84,8 +84,7 @@ export async function multicall(
 
       return res;
     }));
-    
-    return responses.flatMap((resBatch) => resBatch.map((call, i) => itf.decodeFunctionResult(calls[i][1], call)));
+    return responses.flat().map((call, i) => itf.decodeFunctionResult(calls[i][1], call)) as any;
   } catch (e) {
     return Promise.reject(e);
   }
