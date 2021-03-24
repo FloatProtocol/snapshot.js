@@ -15,6 +15,7 @@ import { strategy as ethWalletAge } from './eth-wallet-age';
 import { strategy as makerDsChief } from './maker-ds-chief';
 import { strategy as uni } from './uni';
 import { strategy as yearnVault } from './yearn-vault';
+import { strategy as floatProtocol } from './float-protocol';
 import { strategy as fraxFinance } from './frax-finance';
 import { strategy as moloch } from './moloch';
 import { strategy as uniswap } from './uniswap';
@@ -95,6 +96,7 @@ export default {
   'erc1155-balance-of': erc1155BalanceOf,
   'erc1155-balance-of-cv': erc1155BalanceOfCv,
   uni,
+  'float-protocol': floatProtocol,
   'frax-finance': fraxFinance,
   'yearn-vault': yearnVault,
   moloch,
