@@ -41,6 +41,8 @@ export const MULTICALL = {
   '1666700000': '0x9923589503Fd205feE3d367DDFF2378f0F7dD2d4'
 };
 
+const batchSize = 1000;
+
 export const SNAPSHOT_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/snapshot-labs/snapshot',
   '4': 'https://api.thegraph.com/subgraphs/name/snapshot-labs/snapshot-rinkeby',
@@ -67,14 +69,23 @@ export async function multicall(
   const multi = new Contract(MULTICALL[network], multicallAbi, provider);
   const itf = new Interface(abi);
   try {
-    const [, res] = await multi.aggregate(
-      calls.map((call) => [
-        call[0].toLowerCase(),
-        itf.encodeFunctionData(call[1], call[2])
-      ]),
-      options || {}
-    );
-    return res.map((call, i) => itf.decodeFunctionResult(calls[i][1], call));
+    const callBatches: any[][] = [];
+    for (let i = 0; i < calls.length; i += batchSize) {
+      callBatches.push(calls.slice(i, i + batchSize));
+    }
+    const responses = await Promise.all(callBatches.map(async (callBatch) => {
+      const [, res] = await multi.aggregate(
+        callBatch.map((call) => [
+          call[0].toLowerCase(),
+          itf.encodeFunctionData(call[1], call[2])
+        ]),
+        options || {}
+      );
+
+      return res;
+    }));
+    
+    return responses.flatMap((resBatch) => resBatch.map((call, i) => itf.decodeFunctionResult(calls[i][1], call)));
   } catch (e) {
     return Promise.reject(e);
   }
