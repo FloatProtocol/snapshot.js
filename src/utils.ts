@@ -189,29 +189,31 @@ export async function getScores(
   snapshot: number | string = 'latest'
 ): Promise<Scores[]> {
   try {
-    return (await Promise.allSettled<Scores[]>(
-      strategies.map((strategy) =>
-        (snapshot !== 'latest' && strategy.params?.start > snapshot) ||
-        (strategy.params?.end &&
-          (snapshot === 'latest' || snapshot > strategy.params?.end)) ||
-        addresses.length === 0
-          ? {}
-          : _strategies[strategy.name](
-              space,
-              network,
-              provider,
-              addresses,
-              strategy.params,
-              snapshot
-            )
+    return (
+      await Promise.allSettled<Scores[]>(
+        strategies.map((strategy) =>
+          (snapshot !== 'latest' && strategy.params?.start > snapshot) ||
+          (strategy.params?.end &&
+            (snapshot === 'latest' || snapshot > strategy.params?.end)) ||
+          addresses.length === 0
+            ? {}
+            : _strategies[strategy.name](
+                space,
+                network,
+                provider,
+                addresses,
+                strategy.params,
+                snapshot
+              )
+        )
       )
-    )).map((result => {
-      if (result.status === "rejected")  {
+    ).map((result) => {
+      if (result.status === 'rejected') {
         console.error(result.reason);
         return {};
       }
       return result.value;
-    }));
+    });
   } catch (e) {
     return Promise.reject(e);
   }
