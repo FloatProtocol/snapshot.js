@@ -143,12 +143,12 @@ export async function strategy(
     [address]
   ]);
 
-  // Fetch unclaimed BANK
-  const unclaimedBankQueries = Object.values(
-    options.pools
-  ).flatMap((pool: any) =>
-    addresses.map((address: any) => [pool, 'earned', [address]])
-  );
+  // // Fetch unclaimed BANK
+  // const unclaimedBankQueries = Object.values(
+  //   options.pools
+  // ).flatMap((pool: any) =>
+  //   addresses.map((address: any) => [pool, 'earned', [address]])
+  // );
 
   const response = await multicall(
     network,
@@ -165,7 +165,7 @@ export async function strategy(
       ...unstakedUniLPBankEthQuery,
       ...unstakedSushiLPBankEthQuery,
       ...stakedSushiLPBankEthQuery,
-      ...unclaimedBankQueries
+      // ...unclaimedBankQueries // This is too perfomance heavy.
     ],
     { blockTag }
   );
