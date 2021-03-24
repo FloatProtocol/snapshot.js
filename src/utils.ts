@@ -15,6 +15,7 @@ import {
   resolveContent
 } from './utils/contentHash';
 import { signMessage, getBlockNumber } from './utils/web3';
+import { Score } from './utils/types';
 
 export const MULTICALL = {
   '1': '0xeefba1e63905ef1d7acba5a8513c70307c1ce441',
@@ -176,10 +177,6 @@ export async function sendTransaction(
   return await contractWithSigner[action](...params, overrides);
 }
 
-interface Scores {
-  [address: string]: number;
-}
-
 export async function getScores(
   space: string,
   strategies: any[],
@@ -187,10 +184,10 @@ export async function getScores(
   provider,
   addresses: string[],
   snapshot: number | string = 'latest'
-): Promise<Scores[]> {
+): Promise<Score[]> {
   try {
     return (
-      await Promise.allSettled<Scores[]>(
+      await Promise.allSettled<Score[]>(
         strategies.map((strategy) =>
           (snapshot !== 'latest' && strategy.params?.start > snapshot) ||
           (strategy.params?.end &&

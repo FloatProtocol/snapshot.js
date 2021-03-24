@@ -1,6 +1,7 @@
 import { formatUnits } from '@ethersproject/units';
 import { BigNumber } from '@ethersproject/bignumber';
 import { multicall } from '../../utils';
+import { Score } from '../../utils/types';
 
 const ONE = BigNumber.from('1000000000000000000');
 
@@ -111,7 +112,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
 
   // Fetch BANK Balance
