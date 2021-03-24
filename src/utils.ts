@@ -176,6 +176,10 @@ export async function sendTransaction(
   return await contractWithSigner[action](...params, overrides);
 }
 
+interface Scores {
+  [address: string]: number;
+}
+
 export async function getScores(
   space: string,
   strategies: any[],
@@ -183,9 +187,9 @@ export async function getScores(
   provider,
   addresses: string[],
   snapshot: number | string = 'latest'
-) {
+): Promise<Scores[]> {
   try {
-    return await Promise.all(
+    return (await Promise.allSettled<Scores[]>(
       strategies.map((strategy) =>
         (snapshot !== 'latest' && strategy.params?.start > snapshot) ||
         (strategy.params?.end &&
@@ -201,7 +205,13 @@ export async function getScores(
               snapshot
             )
       )
-    );
+    )).map((result => {
+      if (result.status === "rejected")  {
+        console.error(result.reason);
+        return {};
+      }
+      return result.value;
+    }));
   } catch (e) {
     return Promise.reject(e);
   }
