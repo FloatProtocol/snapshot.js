@@ -131,14 +131,14 @@ export async function strategy(
 
   // Fetch unstaked Sushi LP Balance
   const unstakedSushiLPBankEthQuery = addresses.map((address: any) => [
-    options.sushiPhase2Pool,
+    options.sushiswapBankEthPair,
     'balanceOf',
     [address]
   ]);
 
   // Fetch staked Sushi LP Balance
   const stakedSushiLPBankEthQuery = addresses.map((address: any) => [
-    options.sushiPhase2Pool,
+    options.slpPhase2Pool,
     'balanceOf',
     [address]
   ]);
@@ -182,7 +182,7 @@ export async function strategy(
   // Uniswap BANK-ETH
   // ----------------------------------------
   const uniLPBankEth_reservesBANK_E0 =
-    uniLPBankEth_token0[0] == options.bank
+    uniLPBankEth_token0[0].toLowerCase() === options.bank.toLowerCase()
       ? uniLPBankEth_getReserves[0]
       : uniLPBankEth_getReserves[1];
   const uni_BankEth_totalSupply_E0 = uniLPBankEth_totalSupply[0];
@@ -193,9 +193,10 @@ export async function strategy(
   // SushiSwap BANK-ETH
   // ----------------------------------------
   const sushiLPBankEth_reservesBANK_E0 =
-    sushiLPBankEth_token0[0] == options.bank
+    sushiLPBankEth_token0[0].toLowerCase() === options.bank.toLowerCase()
       ? sushiLPBankEth_getReserves[0]
       : sushiLPBankEth_getReserves[1];
+
   const sushi_BankEth_totalSupply_E0 = sushiLPBankEth_totalSupply[0];
   const sushiLPBankEth_bankPerLP_E18 = sushiLPBankEth_reservesBANK_E0
     .mul(ONE)
@@ -248,6 +249,11 @@ export async function strategy(
         //   'BANK per Sushi BANK-ETH LP: ',
         //   sushiLPBankEth_bankPerLP_E18.toString()
         // );
+        // console.log(`Sushi:
+        //   ${sushiLPBankEth_getReserves}
+        //   reserve0: ${sushiLPBankEth_reservesBANK_E0}
+        //   Token 0: ${sushiLPBankEth_token0}
+        // `)
         // console.log(``);
 
         let totalBank = heldBank

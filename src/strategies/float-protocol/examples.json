@@ -22,7 +22,7 @@
                 },
                 "uniswapBankEthPair": "0xe965c12b851c30256BDc2F94Ccd9DC4F0A0BC581",
                 "sushiswapBankEthPair": "0x938625591adb4e865b882377e2c965f9f9b85e34",
-                "sushiPhase2Pool": "0xd04F4759A2cc28A5AE33287534CAA4dfcE90B9C3"
+                "slpPhase2Pool": "0xd04F4759A2cc28A5AE33287534CAA4dfcE90B9C3"
             }
         },
         "network": "1",
@@ -2494,6 +2494,6 @@
             "0x8Dd4FC6EC4E375894DE3DeA5696c7fCFe39E3b9E",
             "0xd61551116E9D092E5f38Ae03B3b63e5a58C73B2C"
         ],
-        "snapshot": 12103475
+        "snapshot": 12103033 
     }
 ]
