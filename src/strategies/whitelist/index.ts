@@ -1,3 +1,5 @@
+import { Score } from "../../utils/types";
+
 export const author = 'bonustrack';
 export const version = '0.1.0';
 
@@ -8,7 +10,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const whitelist = options?.addresses.map((address) => address.toLowerCase());
   return Object.fromEntries(
     addresses.map((address) => [

@@ -2,6 +2,7 @@ import fetch from 'cross-fetch';
 import { Web3Provider } from '@ethersproject/providers';
 import { formatUnits } from '@ethersproject/units';
 import { BigNumber } from '@ethersproject/bignumber';
+import { Score } from '../../utils/types';
 
 export const author = 'mccallofthewild';
 export const version = '0.1.0';

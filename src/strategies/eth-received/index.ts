@@ -1,6 +1,7 @@
 import fetch from 'cross-fetch';
 import { Web3Provider } from '@ethersproject/providers';
-import { ElasticSearchTxResult } from './ElasticSearchTxResult';
+import { ElasticSearchTxResult } from './ElasticSearchTxResult';import { Score } from '../../utils/types';
+
 export const author = 'mccallofthewild';
 export const version = '0.1.0';
 

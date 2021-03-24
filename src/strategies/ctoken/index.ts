@@ -1,5 +1,6 @@
 import { formatUnits } from '@ethersproject/units';
 import { multicall } from '../../utils';
+import { Score } from '../../utils/types';
 
 export const author = 'arr00';
 export const version = '0.1.0';
@@ -56,7 +57,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
   const oldBlockTag =
     typeof snapshot === 'number'

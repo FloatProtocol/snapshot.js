@@ -1,5 +1,6 @@
 import { formatUnits } from '@ethersproject/units';
 import { multicall } from '../../utils';
+import { Score } from '../../utils/types';
 
 export const author = 'alirun';
 export const version = '0.0.1';
@@ -51,7 +52,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
 
   // Fetch OPIUM Balance

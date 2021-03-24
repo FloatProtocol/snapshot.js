@@ -1,4 +1,5 @@
 import { multicall } from '../../utils';
+import { Score } from '../../utils/types';
 
 export const author = 'vfatouros';
 export const version = '0.1.0';

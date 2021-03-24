@@ -1,6 +1,7 @@
 import { EnumType } from 'json-to-graphql-query';
 import fetch from 'cross-fetch';
 import { subgraphRequest } from '../../utils';
+import { Score } from '../../utils/types';
 
 export const author = 'ChaituVR';
 export const version = '0.1.0';
@@ -25,7 +26,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const apiLimit = 300;
   let data: any = [];
   const query = Object.fromEntries(

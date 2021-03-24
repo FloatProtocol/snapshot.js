@@ -4,6 +4,7 @@ import { subgraphRequest } from '../../utils';
 const KEEP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/miracle2k/all-the-keeps'
 };
+import { Score } from '../../utils/types';
 
 export const author = 'corollari';
 export const version = '0.1.0';

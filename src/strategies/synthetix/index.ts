@@ -1,6 +1,7 @@
 import { formatUnits } from '@ethersproject/units';
 import { subgraphRequest } from '../../utils';
 import { getAddress } from '@ethersproject/address';
+import { Score } from '../../utils/types';
 
 export const author = 'andytcf';
 export const version = '0.0.1';

@@ -1,5 +1,6 @@
 import { multicall } from '../../utils';
 import { BigNumber } from '@ethersproject/bignumber';
+import { Score } from '../../utils/types';
 
 export const author = 'Axion Foundation';
 export const version = '0.2.0';
@@ -34,7 +35,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
   const totalShares = await multicall(
     network,

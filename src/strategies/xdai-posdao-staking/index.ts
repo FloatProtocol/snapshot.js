@@ -1,3 +1,4 @@
+import { Score } from '../../utils/types';
 import { strategy as xdaiStakersAndHoldersStrategy } from '../xdai-stakers-and-holders';
 
 export const author = 'maxaleks';
@@ -10,7 +11,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   return xdaiStakersAndHoldersStrategy(
     space,
     network,

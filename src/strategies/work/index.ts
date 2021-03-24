@@ -1,5 +1,6 @@
 import { formatUnits } from '@ethersproject/units';
 import Multicaller from '../../utils/multicaller';
+import { Score } from '../../utils/types';
 
 export const author = 'bonustrack';
 export const version = '0.1.0';
@@ -28,7 +29,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
   const multi = new Multicaller(network, provider, abi, { blockTag });
   addresses.forEach((address) => {

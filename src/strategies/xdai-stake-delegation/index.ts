@@ -3,6 +3,7 @@ import { strategy as xdaiEasyStakingStrategy } from '../xdai-easy-staking';
 import { strategy as xdaiPOSDAOStakingStrategy } from '../xdai-posdao-staking';
 import { strategy as xdaiStakeHoldersStrategy } from '../xdai-stake-holders';
 import { getDelegations } from '../../plugins/delegation/utils';
+import { Score } from '../../utils/types';
 
 export const author = 'maxaleks';
 export const version = '0.1.0';
@@ -14,7 +15,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const delegations = await getDelegations(
     space,
     network,

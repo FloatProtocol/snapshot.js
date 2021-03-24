@@ -2,6 +2,7 @@ import { formatUnits } from '@ethersproject/units';
 import { BigNumber } from '@ethersproject/bignumber';
 import { subgraphRequest, call } from '../../utils';
 import { calculateEmission } from './utils';
+import { Score } from '../../utils/types';
 
 export const author = 'maxaleks';
 export const version = '0.1.0';
@@ -101,7 +102,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const [
     easyStakingDeposits,
     { sigmoidParameters, totalSupplyFactor, totalStaked },

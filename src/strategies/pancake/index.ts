@@ -1,6 +1,7 @@
 import { formatUnits } from '@ethersproject/units';
 import { multicall } from '../../utils';
 import { strategy as erc20BalanceOfStrategy } from '../erc20-balance-of';
+import { Score } from '../../utils/types';
 
 export const author = 'pancake-swap';
 export const version = '0.0.1';
@@ -68,7 +69,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
   const score = await erc20BalanceOfStrategy(
     space,

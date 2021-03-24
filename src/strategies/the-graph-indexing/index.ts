@@ -1,4 +1,5 @@
 import { baseStrategy } from '../the-graph/baseStrategy';
+import { Score } from '../../utils/types';
 
 export const author = 'davekaj';
 export const version = '0.1.0';

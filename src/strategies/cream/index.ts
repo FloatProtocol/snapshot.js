@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getBlockNumber } from '../../utils/web3';
 import Multicaller from '../../utils/multicaller';
+import { Score } from '../../utils/types';
 
 export const author = 'jeremyHD';
 export const version = '0.2.1';
@@ -111,7 +112,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const snapshotBlock =
     typeof snapshot === 'number' ? snapshot : await getBlockNumber(provider);
   let snapshotBlocks: number[] = [];

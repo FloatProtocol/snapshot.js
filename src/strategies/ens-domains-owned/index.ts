@@ -7,6 +7,7 @@ const ENS_SUBGRAPH_URL = {
   '4': 'https://api.thegraph.com/subgraphs/name/ensdomains/ensrinkeby',
   '5': 'https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli'
 };
+import { Score } from '../../utils/types';
 
 export const author = 'makoto';
 export const version = '0.1.0';

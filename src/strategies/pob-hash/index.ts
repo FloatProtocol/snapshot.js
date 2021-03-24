@@ -1,4 +1,5 @@
 import { subgraphRequest } from '../../utils';
+import { Score } from '../../utils/types';
 
 export const author = 'dave4506';
 export const version = '0.1.1';

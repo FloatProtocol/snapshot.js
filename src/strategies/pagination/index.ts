@@ -1,4 +1,5 @@
 import strategies from '..';
+import { Score } from '../../utils/types';
 
 export const author = 'bonustrack';
 export const version = '0.1.0';
@@ -10,7 +11,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const max = options.limit || 1000;
   const pages = Math.ceil(addresses.length / max);
   const promises: any = [];

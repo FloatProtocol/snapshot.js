@@ -9,6 +9,7 @@ const MASTERCHEF_SUBGRAPH_URL = {
 const SUSHISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/sushiswap/exchange'
 };
+import { Score } from '../../utils/types';
 
 export const author = '0xKiwi & Float Protocol';
 export const version = '0.1.1';

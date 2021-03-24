@@ -1,5 +1,6 @@
 import { formatUnits } from '@ethersproject/units';
 import { multicall } from '../../utils';
+import { Score } from '../../utils/types';
 
 export const author = 'crypto_pumpkin';
 export const version = '0.1.0';

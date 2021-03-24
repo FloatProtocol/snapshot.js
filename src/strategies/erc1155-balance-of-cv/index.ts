@@ -1,3 +1,4 @@
+import { Score } from '../../utils/types';
 import { strategy as erc1155BalanceOfStrategy } from '../erc1155-balance-of';
 
 export const author = 'dave4506';
@@ -10,7 +11,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const score = await erc1155BalanceOfStrategy(
     space,
     network,

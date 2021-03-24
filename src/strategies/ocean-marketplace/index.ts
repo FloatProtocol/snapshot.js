@@ -3,6 +3,7 @@ import { subgraphRequest } from '../../utils';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { BigNumber } from '@ethersproject/bignumber';
 import { verifyResultsLength, verifyResults } from './oceanUtils';
+import { Score } from '../../utils/types';
 
 export const author = 'w1kke';
 export const version = '0.1.0';
@@ -44,7 +45,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const params = {
     pools: {
       __args: {

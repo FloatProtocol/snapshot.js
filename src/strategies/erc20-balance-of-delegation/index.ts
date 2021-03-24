@@ -1,5 +1,6 @@
 import { strategy as erc20BalanceOfStrategy } from '../erc20-balance-of';
 import { getDelegations } from '../../plugins/delegation/utils';
+import { Score } from '../../utils/types';
 
 export const author = 'bonustrack';
 export const version = '0.1.0';
@@ -11,7 +12,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const delegations = await getDelegations(
     space,
     network,

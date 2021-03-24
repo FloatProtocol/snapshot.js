@@ -1,6 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers';
 import { strategy as ethReceivedStrategy } from '../eth-received';
-import fetch from 'cross-fetch';
+import fetch from 'cross-fetch';import { Score } from '../../utils/types';
+
 export const author = 'mccallofthewild';
 export const version = '0.1.0';
 

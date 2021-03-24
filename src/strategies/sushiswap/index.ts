@@ -4,6 +4,7 @@ import { batchAddressSubgraphRequest } from '../../utils';
 const SUSHISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/sushiswap/exchange'
 };
+import { Score } from '../../utils/types';
 
 export const author = 'vfatouros & Float Protocol';
 export const version = '0.2.0';

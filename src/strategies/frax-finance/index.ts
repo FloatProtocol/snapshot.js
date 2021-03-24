@@ -8,6 +8,7 @@ const BIG18 = BigNumber.from('1000000000000000000');
 const UNISWAP_SUBGRAPH_URL = {
   '1': 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
 };
+import { Score } from '../../utils/types';
 
 export const author = 'FraxFinance';
 export const version = '0.0.1';
@@ -115,7 +116,7 @@ export async function strategy(
   addresses,
   options,
   snapshot
-) {
+): Promise<Score> {
   const blockTag = typeof snapshot === 'number' ? snapshot : 'latest';
 
   // Fetch FXS Balance
