@@ -87,7 +87,7 @@ export async function strategy(
   // Get total votes, for ALL addresses, inside top 1000 pools, with a minimum of 0.0001 shares
   const score = {};
   const userAddresses: string[] = [];
-  const return_score = {};
+  const return_score: Score = {};
   if (graphResults && graphResults.pools) {
     graphResults.pools.forEach((pool) => {
       if (pool.holderCount > 0 && pool.active) {
@@ -117,7 +117,7 @@ export async function strategy(
   }
 
   // We then filter only the addresses expected
-  const results = Object.fromEntries(
+  const results: Score = Object.fromEntries(
     Object.entries(return_score).filter(([k, v]) => addresses.indexOf(k) >= 0)
   );
 
